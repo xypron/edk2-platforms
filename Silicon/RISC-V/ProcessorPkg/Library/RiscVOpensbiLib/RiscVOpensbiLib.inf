@@ -16,70 +16,141 @@
   LIBRARY_CLASS  = RiscVOpensbiLib
 
 [Sources]
-  opensbi/lib/sbi/riscv_asm.c
-  opensbi/lib/sbi/riscv_atomic.c
-  opensbi/lib/sbi/riscv_hardfp.S
-  opensbi/lib/sbi/riscv_locks.c
-  opensbi/lib/sbi/sbi_bitmap.c
-  opensbi/lib/sbi/sbi_bitops.c
-  opensbi/lib/sbi/sbi_console.c
-  opensbi/lib/sbi/sbi_domain.c
   opensbi/lib/sbi/sbi_ecall.c
-  opensbi/lib/sbi/sbi_ecall_base.c
-  opensbi/lib/sbi/sbi_ecall_hsm.c
-  opensbi/lib/sbi/sbi_ecall_legacy.c
-  opensbi/lib/sbi/sbi_ecall_replace.c
-  opensbi/lib/sbi/sbi_ecall_vendor.c
-  opensbi/lib/sbi/sbi_emulate_csr.c
-  opensbi/lib/sbi/sbi_fifo.c
-  opensbi/lib/sbi/sbi_hart.c
-  opensbi/lib/sbi/sbi_math.c
   opensbi/lib/sbi/sbi_hfence.S
-  opensbi/lib/sbi/sbi_hsm.c
-  opensbi/lib/sbi/sbi_illegal_insn.c
+  opensbi/lib/sbi/sbi_ecall_hsm.c
   opensbi/lib/sbi/sbi_init.c
-  opensbi/lib/sbi/sbi_ipi.c
-  opensbi/lib/sbi/sbi_misaligned_ldst.c
-  opensbi/lib/sbi/sbi_platform.c
-  opensbi/lib/sbi/sbi_scratch.c
+  opensbi/lib/sbi/sbi_hart.c
+  opensbi/lib/sbi/sbi_fifo.c
+  opensbi/lib/sbi/sbi_hsm.c
+  opensbi/lib/sbi/sbi_bitops.c
+  opensbi/lib/sbi/sbi_ecall_legacy.c
+  opensbi/lib/sbi/sbi_ecall_base.c
+  opensbi/lib/sbi/sbi_emulate_csr.c
+  opensbi/lib/sbi/sbi_console.c
+  opensbi/lib/sbi/sbi_ecall_replace.c
+  opensbi/lib/sbi/sbi_math.c
   opensbi/lib/sbi/sbi_string.c
+  opensbi/lib/sbi/riscv_locks.c
+  opensbi/lib/sbi/sbi_platform.c
+  opensbi/lib/sbi/sbi_pmu.c
+  opensbi/lib/sbi/sbi_bitmap.c
+  opensbi/lib/sbi/riscv_asm.c
+  opensbi/lib/sbi/sbi_misaligned_ldst.c
+  opensbi/lib/sbi/sbi_illegal_insn.c
   opensbi/lib/sbi/sbi_system.c
+  opensbi/lib/sbi/sbi_ecall_vendor.c
+  opensbi/lib/sbi/riscv_atomic.c
+  opensbi/lib/sbi/sbi_ecall_pmu.c
+  opensbi/lib/sbi/sbi_expected_trap.S
   opensbi/lib/sbi/sbi_timer.c
   opensbi/lib/sbi/sbi_tlb.c
-  opensbi/lib/sbi/sbi_trap.c
   opensbi/lib/sbi/sbi_unpriv.c
-  opensbi/lib/sbi/sbi_expected_trap.S
-
+  opensbi/lib/sbi/riscv_hardfp.S
+  opensbi/lib/sbi/sbi_trap.c
+  opensbi/lib/sbi/sbi_ipi.c
+  opensbi/lib/sbi/sbi_scratch.c
+  opensbi/lib/sbi/sbi_domain.c
+  opensbi/lib/utils/gpio/gpio.c
+  opensbi/lib/utils/gpio/fdt_gpio.c
+  opensbi/lib/utils/gpio/fdt_gpio_sifive.c
   opensbi/lib/utils/fdt/fdt_helper.c
-  opensbi/lib/utils/fdt/fdt_fixup.c
   opensbi/lib/utils/fdt/fdt_domain.c
-  opensbi/lib/utils/ipi/fdt_ipi.c
-  opensbi/lib/utils/ipi/aclint_mswi.c
-  opensbi/lib/utils/ipi/fdt_ipi_mswi.c
-  opensbi/lib/utils/irqchip/fdt_irqchip.c
-  opensbi/lib/utils/irqchip/fdt_irqchip_plic.c
-  opensbi/lib/utils/irqchip/plic.c
-  opensbi/lib/utils/reset/fdt_reset.c
-  opensbi/lib/utils/reset/fdt_reset_htif.c
-  opensbi/lib/utils/reset/fdt_reset_sifive.c
+  opensbi/lib/utils/fdt/fdt_fixup.c
+  opensbi/lib/utils/fdt/fdt_pmu.c
+  opensbi/lib/utils/reset/fdt_reset_sifive_test.c
+  opensbi/lib/utils/reset/fdt_reset_thead.h
   opensbi/lib/utils/reset/fdt_reset_thead.c
   opensbi/lib/utils/reset/fdt_reset_thead_asm.S
-  opensbi/lib/utils/serial/fdt_serial.c
-  opensbi/lib/utils/serial/fdt_serial_htif.c
-  opensbi/lib/utils/serial/fdt_serial_shakti.c
-  opensbi/lib/utils/serial/fdt_serial_sifive.c
-  opensbi/lib/utils/serial/fdt_serial_uart8250.c
-  opensbi/lib/utils/serial/fdt_serial_gaisler.c
-  opensbi/lib/utils/serial/gaisler-uart.c
-  opensbi/lib/utils/serial/shakti-uart.c
-  opensbi/lib/utils/serial/sifive-uart.c
-  opensbi/lib/utils/serial/uart8250.c
-  opensbi/lib/utils/sys/htif.c
-  opensbi/lib/utils/sys/sifive_test.c
+  opensbi/lib/utils/reset/fdt_reset_htif.c
+  opensbi/lib/utils/reset/fdt_reset.c
+  opensbi/lib/utils/reset/fdt_reset_gpio.c
+  opensbi/lib/utils/ipi/aclint_mswi.c
+  opensbi/lib/utils/ipi/fdt_ipi_mswi.c
+  opensbi/lib/utils/ipi/fdt_ipi.c
+  opensbi/lib/utils/timer/fdt_timer_mtimer.c
   opensbi/lib/utils/timer/fdt_timer.c
   opensbi/lib/utils/timer/aclint_mtimer.c
-  opensbi/lib/utils/timer/fdt_timer_mtimer.c
-
+  opensbi/lib/utils/sys/sifive_test.c
+  opensbi/lib/utils/sys/htif.c
+  opensbi/lib/utils/serial/sifive-uart.c
+  opensbi/lib/utils/serial/fdt_serial_shakti.c
+  opensbi/lib/utils/serial/fdt_serial_sifive.c
+  opensbi/lib/utils/serial/gaisler-uart.c
+  opensbi/lib/utils/serial/shakti-uart.c
+  opensbi/lib/utils/serial/fdt_serial_uart8250.c
+  opensbi/lib/utils/serial/uart8250.c
+  opensbi/lib/utils/serial/fdt_serial.c
+  opensbi/lib/utils/serial/fdt_serial_gaisler.c
+  opensbi/lib/utils/serial/fdt_serial_htif.c
+  opensbi/lib/utils/irqchip/fdt_irqchip_plic.c
+  opensbi/lib/utils/irqchip/fdt_irqchip_imsic.c
+  opensbi/lib/utils/irqchip/aplic.c
+  opensbi/lib/utils/irqchip/plic.c
+  opensbi/lib/utils/irqchip/fdt_irqchip_aplic.c
+  opensbi/lib/utils/irqchip/fdt_irqchip.c
+  opensbi/lib/utils/irqchip/imsic.c
+  opensbi/include/sbi/riscv_atomic.h
+  opensbi/include/sbi/sbi_timer.h
+  opensbi/include/sbi/sbi_illegal_insn.h
+  opensbi/include/sbi/sbi_trap.h
+  opensbi/include/sbi/sbi_emulate_csr.h
+  opensbi/include/sbi/sbi_ecall_interface.h
+  opensbi/include/sbi/sbi_math.h
+  opensbi/include/sbi/sbi_misaligned_ldst.h
+  opensbi/include/sbi/riscv_io.h
+  opensbi/include/sbi/sbi_hfence.h
+  opensbi/include/sbi/sbi_version.h
+  opensbi/include/sbi/sbi_tlb.h
+  opensbi/include/sbi/sbi_scratch.h
+  opensbi/include/sbi/sbi_pmu.h
+  opensbi/include/sbi/sbi_init.h
+  opensbi/include/sbi/sbi_system.h
+  opensbi/include/sbi/sbi_types.h
+  opensbi/include/sbi/sbi_error.h
+  opensbi/include/sbi/riscv_asm.h
+  opensbi/include/sbi/riscv_elf.h
+  opensbi/include/sbi/sbi_platform.h
+  opensbi/include/sbi/sbi_bitops.h
+  opensbi/include/sbi/riscv_barrier.h
+  opensbi/include/sbi/sbi_string.h
+  opensbi/include/sbi/fw_dynamic.h
+  opensbi/include/sbi/riscv_encoding.h
+  opensbi/include/sbi/sbi_hart.h
+  opensbi/include/sbi/sbi_hartmask.h
+  opensbi/include/sbi/sbi_hsm.h
+  opensbi/include/sbi/sbi_unpriv.h
+  opensbi/include/sbi/sbi_ecall.h
+  opensbi/include/sbi/riscv_fp.h
+  opensbi/include/sbi/riscv_locks.h
+  opensbi/include/sbi/sbi_ipi.h
+  opensbi/include/sbi/sbi_console.h
+  opensbi/include/sbi/sbi_list.h
+  opensbi/include/sbi/sbi_domain.h
+  opensbi/include/sbi/sbi_fifo.h
+  opensbi/include/sbi/sbi_bitmap.h
+  opensbi/include/sbi/sbi_const.h
+  opensbi/include/sbi/sbi_csr_detect.h
+  opensbi/include/sbi_utils/fdt/fdt_domain.h
+  opensbi/include/sbi_utils/fdt/fdt_pmu.h
+  opensbi/include/sbi_utils/fdt/fdt_helper.h
+  opensbi/include/sbi_utils/fdt/fdt_fixup.h
+  opensbi/include/sbi_utils/reset/fdt_reset.h
+  opensbi/include/sbi_utils/ipi/aclint_mswi.h
+  opensbi/include/sbi_utils/ipi/fdt_ipi.h
+  opensbi/include/sbi_utils/timer/fdt_timer.h
+  opensbi/include/sbi_utils/timer/aclint_mtimer.h
+  opensbi/include/sbi_utils/sys/sifive_test.h
+  opensbi/include/sbi_utils/sys/htif.h
+  opensbi/include/sbi_utils/serial/sifive-uart.h
+  opensbi/include/sbi_utils/serial/uart8250.h
+  opensbi/include/sbi_utils/serial/shakti-uart.h
+  opensbi/include/sbi_utils/serial/fdt_serial.h
+  opensbi/include/sbi_utils/serial/gaisler-uart.h
+  opensbi/include/sbi_utils/irqchip/plic.h
+  opensbi/include/sbi_utils/irqchip/aplic.h
+  opensbi/include/sbi_utils/irqchip/imsic.h
+  opensbi/include/sbi_utils/irqchip/fdt_irqchip.h
 [Packages]
   EmbeddedPkg/EmbeddedPkg.dec   # For libfdt.
   MdePkg/MdePkg.dec
