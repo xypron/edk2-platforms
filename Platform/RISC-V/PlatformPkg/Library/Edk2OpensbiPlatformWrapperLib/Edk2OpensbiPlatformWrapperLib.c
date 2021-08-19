@@ -167,6 +167,21 @@ SecPostOpenSbiPlatformFinalInit (
 
   return 0;
 }
+
+/**
+  OpenSBI platform Nascent Init
+
+**/
+INT32
+Edk2OpensbiPlatformNascentInit (
+  )
+{
+    if (platform_ops.nascent_init) {
+        platform_ops.nascent_init();
+    }
+    return 0;
+}
+
 /**
   OpenSBI platform early init hook.
 
@@ -510,6 +525,7 @@ Edk2OpensbiPlatformVendorExtProvider (
 }
 
 CONST struct sbi_platform_operations Edk2OpensbiPlatformOps = {
+	.nascent_init		    = Edk2OpensbiPlatformNascentInit,
     .early_init             = Edk2OpensbiPlatformEarlyInit,
     .final_init             = Edk2OpensbiPlatformFinalInit,
     .early_exit             = Edk2OpensbiPlatformEarlyExit,
