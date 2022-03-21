@@ -222,6 +222,10 @@ INF  OvmfPkg/SmbiosPlatformDxe/SmbiosPlatformDxe.inf
 INF  OvmfPkg/LinuxInitrdDynamicShellCommand/LinuxInitrdDynamicShellCommand.inf
 INF  ShellPkg/Application/Shell/Shell.inf
 
+# TFTP support for PXE boot
+INF ShellPkg/DynamicCommand/TftpDynamicCommand/TftpDynamicCommand.inf
+INF ShellPkg/DynamicCommand/TftpDynamicCommand/TftpApp.inf
+
 #
 # Network modules
 #
