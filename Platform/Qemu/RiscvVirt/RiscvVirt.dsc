@@ -37,9 +37,10 @@
   #
   DEFINE NETWORK_SNP_ENABLE       = FALSE
   DEFINE NETWORK_IP6_ENABLE       = FALSE
-  DEFINE NETWORK_TLS_ENABLE       = FALSE 
-  DEFINE NETWORK_HTTP_BOOT_ENABLE = FALSE 
+  DEFINE NETWORK_TLS_ENABLE       = TRUE 
+  DEFINE NETWORK_HTTP_BOOT_ENABLE = TRUE 
   DEFINE NETWORK_ISCSI_ENABLE     = FALSE
+  DEFINE NETWORK_ALLOW_HTTP_CONNECTIONS = TRUE
 
 [BuildOptions]
   GCC:RELEASE_*_*_CC_FLAGS       = -DMDEPKG_NDEBUG
@@ -687,6 +688,16 @@
       NULL|MdeModulePkg/Library/BootMaintenanceManagerUiLib/BootMaintenanceManagerUiLib.inf
   }
 
+# HTTPS(secure) support in GUI for updating ssl keys for PXE boot
+  MdeModulePkg/Application/UiApp/UiApp.inf {
+    <LibraryClasses>
+      NULL|MdeModulePkg/Library/DeviceManagerUiLib/DeviceManagerUiLib.inf
+      NULL|MdeModulePkg/Library/BootManagerUiLib/BootManagerUiLib.inf
+      NULL|MdeModulePkg/Library/BootMaintenanceManagerUiLib/BootMaintenanceManagerUiLib.inf
+      FileExplorerLib|MdeModulePkg/Library/FileExplorerLib/FileExplorerLib.inf
+  }
+
+
 # TFTP support for PXE boot
   ShellPkg/DynamicCommand/TftpDynamicCommand/TftpDynamicCommand.inf {
   <PcdsFixedAtBuild>
@@ -725,6 +736,23 @@
       SortLib|MdeModulePkg/Library/UefiSortLib/UefiSortLib.inf
       HttpLib|NetworkPkg/Library/DxeHttpLib/DxeHttpLib.inf
   }
+
+# HTTPS (secure) support for PXE boot
+  NetworkPkg/TlsDxe/TlsDxe.inf {
+  <LibraryClasses>
+      BaseCryptLib|CryptoPkg/Library/BaseCryptLib/BaseCryptLib.inf
+      TlsLib|CryptoPkg/Library/TlsLib/TlsLib.inf
+  IntrinsicLib|CryptoPkg/Library/IntrinsicLib/IntrinsicLib.inf
+  OpensslLib|CryptoPkg/Library/OpensslLib/OpensslLib.inf
+  RngLib|MdePkg/Library/DxeRngLib/DxeRngLib.inf
+      FileExplorerLib|MdeModulePkg/Library/FileExplorerLib/FileExplorerLib.inf
+  }
+NetworkPkg/TlsAuthConfigDxe/TlsAuthConfigDxe.inf {
+  <LibraryClasses>
+      FileExplorerLib|MdeModulePkg/Library/FileExplorerLib/FileExplorerLib.inf
+      NULL|OvmfPkg/Library/TlsAuthConfigLib/TlsAuthConfigLib.inf
+
+}
 
 [PcdsDynamicDefault.common]
   # set PcdPciExpressBaseAddress to MAX_UINT64, which signifies that this
