@@ -37,8 +37,8 @@
   #
   DEFINE NETWORK_SNP_ENABLE       = FALSE
   DEFINE NETWORK_IP6_ENABLE       = FALSE
-  DEFINE NETWORK_TLS_ENABLE       = FALSE
-  DEFINE NETWORK_HTTP_BOOT_ENABLE = FALSE
+  DEFINE NETWORK_TLS_ENABLE       = FALSE 
+  DEFINE NETWORK_HTTP_BOOT_ENABLE = FALSE 
   DEFINE NETWORK_ISCSI_ENABLE     = FALSE
 
 [BuildOptions]
@@ -702,6 +702,29 @@
       ShellLib|ShellPkg/Library/UefiShellLib/UefiShellLib.inf
       SortLib|MdeModulePkg/Library/UefiSortLib/UefiSortLib.inf
  }
+
+ # HTTP support for PXE boot
+ ShellPkg/DynamicCommand/HttpDynamicCommand/HttpDynamicCommand.inf {
+    <PcdsFixedAtBuild>
+      gEfiShellPkgTokenSpaceGuid.PcdShellLibAutoInitialize|FALSE
+  <LibraryClasses>
+      ShellLib|ShellPkg/Library/UefiShellLib/UefiShellLib.inf
+      SortLib|MdeModulePkg/Library/UefiSortLib/UefiSortLib.inf
+      HttpLib|NetworkPkg/Library/DxeHttpLib/DxeHttpLib.inf
+ }
+ ShellPkg/DynamicCommand/HttpDynamicCommand/HttpApp.inf {
+     #<Defines>
+      #
+      # ESRT and FMP GUID for sample device capsule update
+      #
+      #FILE_GUID = $(FMP_GREEN_SAMPLE_DEVICE)
+    <PcdsFixedAtBuild>
+      gEfiShellPkgTokenSpaceGuid.PcdShellLibAutoInitialize|FALSE
+  <LibraryClasses>
+      ShellLib|ShellPkg/Library/UefiShellLib/UefiShellLib.inf
+      SortLib|MdeModulePkg/Library/UefiSortLib/UefiSortLib.inf
+      HttpLib|NetworkPkg/Library/DxeHttpLib/DxeHttpLib.inf
+  }
 
 [PcdsDynamicDefault.common]
   # set PcdPciExpressBaseAddress to MAX_UINT64, which signifies that this

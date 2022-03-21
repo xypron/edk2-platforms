@@ -226,6 +226,10 @@ INF  ShellPkg/Application/Shell/Shell.inf
 INF ShellPkg/DynamicCommand/TftpDynamicCommand/TftpDynamicCommand.inf
 INF ShellPkg/DynamicCommand/TftpDynamicCommand/TftpApp.inf
 
+# HTTP support for PXE boot
+INF ShellPkg/DynamicCommand/HttpDynamicCommand/HttpDynamicCommand.inf
+INF ShellPkg/DynamicCommand/HttpDynamicCommand/HttpApp.inf
+
 #
 # Network modules
 #
