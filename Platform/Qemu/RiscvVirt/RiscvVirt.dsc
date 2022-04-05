@@ -173,6 +173,22 @@
   PciHostBridgeLib|OvmfPkg/Fdt/FdtPciHostBridgeLib/FdtPciHostBridgeLib.inf
   PciHostBridgeUtilityLib|OvmfPkg/Library/PciHostBridgeUtilityLib/PciHostBridgeUtilityLib.inf
 
+  # Boot Manager
+!if $(TPM2_ENABLE) == TRUE
+  Tpm2CommandLib|SecurityPkg/Library/Tpm2CommandLib/Tpm2CommandLib.inf
+  Tcg2PhysicalPresenceLib|OvmfPkg/Library/Tcg2PhysicalPresenceLibQemu/DxeTcg2PhysicalPresenceLib.inf
+  TpmMeasurementLib|SecurityPkg/Library/DxeTpmMeasurementLib/DxeTpmMeasurementLib.inf
+  TpmPlatformHierarchyLib|SecurityPkg/Library/PeiDxeTpmPlatformHierarchyLib/PeiDxeTpmPlatformHierarchyLib.inf
+!else
+  TpmMeasurementLib|MdeModulePkg/Library/TpmMeasurementLibNull/TpmMeasurementLibNull.inf
+  TpmPlatformHierarchyLib|SecurityPkg/Library/PeiDxeTpmPlatformHierarchyLibNull/PeiDxeTpmPlatformHierarchyLib.inf
+!endif
+
+  BootLogoLib|MdeModulePkg/Library/BootLogoLib/BootLogoLib.inf
+  PlatformBmPrintScLib|OvmfPkg/Library/PlatformBmPrintScLib/PlatformBmPrintScLib.inf
+  PlatformBootManagerLib|Platform/Qemu/RiscvVirt/Library/PlatformBootManagerLib/PlatformBootManagerLib.inf
+  QemuBootOrderLib|OvmfPkg/Library/QemuBootOrderLib/QemuBootOrderLib.inf
+
 [LibraryClasses.common.SEC]
 !ifdef $(DEBUG_ON_SERIAL_PORT)
   DebugLib|MdePkg/Library/BaseDebugLibSerialPort/BaseDebugLibSerialPort.inf
@@ -308,7 +324,6 @@
   DebugAgentLib|SourceLevelDebugPkg/Library/DebugAgent/DxeDebugAgentLib.inf
 !endif
   UefiBootManagerLib|MdeModulePkg/Library/UefiBootManagerLib/UefiBootManagerLib.inf
-  PlatformBootManagerLib|Platform/RISC-V/PlatformPkg/Library/PlatformBootManagerLib/PlatformBootManagerLib.inf
   PlatformMemoryTestLib|Platform/RISC-V/PlatformPkg/Library/PlatformMemoryTestLibNull/PlatformMemoryTestLibNull.inf
   PlatformUpdateProgressLib|Platform/RISC-V/PlatformPkg/Library/PlatformUpdateProgressLibNull/PlatformUpdateProgressLibNull.inf
 
@@ -346,7 +361,7 @@
 
   gEfiMdeModulePkgTokenSpaceGuid.PcdVpdBaseAddress|0x0
 
-  gEfiMdePkgTokenSpaceGuid.PcdReportStatusCodePropertyMask|0x07
+  gEfiMdePkgTokenSpaceGuid.PcdReportStatusCodePropertyMask|0x02
   gEfiMdePkgTokenSpaceGuid.PcdDebugPrintErrorLevel|0x8000004F
 !ifdef $(SOURCE_DEBUG_ENABLE)
   gEfiMdePkgTokenSpaceGuid.PcdDebugPropertyMask|0x17
@@ -369,6 +384,8 @@
   # F2 for UI APP
   #
   gEfiMdeModulePkgTokenSpaceGuid.PcdBootManagerMenuFile|{ 0x21, 0xaa, 0x2c, 0x46, 0x14, 0x76, 0x03, 0x45, 0x83, 0x6e, 0x8a, 0xb6, 0xf4, 0x66, 0x23, 0x31 }
+
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFirmwareVersionString|L"2.7"
 
   # Serial Port
   gEfiMdeModulePkgTokenSpaceGuid.PcdSerialUseMmio|TRUE
@@ -404,7 +421,7 @@
   gEfiMdeModulePkgTokenSpaceGuid.PcdVideoHorizontalResolution|800
   gEfiMdeModulePkgTokenSpaceGuid.PcdVideoVerticalResolution|600
 
-  gEfiMdePkgTokenSpaceGuid.PcdPlatformBootTimeOut|0
+  gEfiMdePkgTokenSpaceGuid.PcdPlatformBootTimeOut|10
 
   # Set video resolution for text setup.
   gEfiMdeModulePkgTokenSpaceGuid.PcdSetupVideoHorizontalResolution|640
@@ -484,7 +501,6 @@
   #    PcdLib|MdePkg/Library/DxePcdLib/DxePcdLib.inf
   #}
   MdeModulePkg/Universal/Metronome/Metronome.inf
-  MdeModulePkg/Universal/BdsDxe/BdsDxe.inf
   MdeModulePkg/Universal/ResetSystemRuntimeDxe/ResetSystemRuntimeDxe.inf {
     <LibraryClasses>
       ResetSystemLib|MdeModulePkg/Library/BaseResetSystemLibNull/BaseResetSystemLibNull.inf
@@ -647,7 +663,26 @@
   SecurityPkg/VariableAuthenticated/SecureBootConfigDxe/SecureBootConfigDxe.inf
 !endif
 
-  MdeModulePkg/Application/UiApp/UiApp.inf
+
+  #
+  # Bds
+  #
+  MdeModulePkg/Universal/DevicePathDxe/DevicePathDxe.inf {
+    <LibraryClasses>
+      DevicePathLib|MdePkg/Library/UefiDevicePathLib/UefiDevicePathLib.inf
+      PcdLib|MdePkg/Library/BasePcdLibNull/BasePcdLibNull.inf
+  }
+  MdeModulePkg/Universal/DisplayEngineDxe/DisplayEngineDxe.inf
+  MdeModulePkg/Universal/SetupBrowserDxe/SetupBrowserDxe.inf
+  MdeModulePkg/Universal/DriverHealthManagerDxe/DriverHealthManagerDxe.inf
+  MdeModulePkg/Universal/BdsDxe/BdsDxe.inf
+  MdeModulePkg/Logo/LogoDxe.inf
+  MdeModulePkg/Application/UiApp/UiApp.inf {
+    <LibraryClasses>
+      NULL|MdeModulePkg/Library/DeviceManagerUiLib/DeviceManagerUiLib.inf
+      NULL|MdeModulePkg/Library/BootManagerUiLib/BootManagerUiLib.inf
+#      NULL|MdeModulePkg/Library/BootMaintenanceManagerUiLib/BootMaintenanceManagerUiLib.inf
+  }
 
 [PcdsDynamicDefault.common]
   # set PcdPciExpressBaseAddress to MAX_UINT64, which signifies that this
