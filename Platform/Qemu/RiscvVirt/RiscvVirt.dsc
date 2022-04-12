@@ -190,6 +190,7 @@
   BootLogoLib|MdeModulePkg/Library/BootLogoLib/BootLogoLib.inf
   PlatformBmPrintScLib|OvmfPkg/Library/PlatformBmPrintScLib/PlatformBmPrintScLib.inf
   PlatformBootManagerLib|Platform/Qemu/RiscvVirt/Library/PlatformBootManagerLib/PlatformBootManagerLib.inf
+  FrameBufferBltLib|MdeModulePkg/Library/FrameBufferBltLib/FrameBufferBltLib.inf
   QemuBootOrderLib|OvmfPkg/Library/QemuBootOrderLib/QemuBootOrderLib.inf
   FileExplorerLib|MdeModulePkg/Library/FileExplorerLib/FileExplorerLib.inf
 
@@ -535,11 +536,9 @@
   MdeModulePkg/Universal/Console/ConPlatformDxe/ConPlatformDxe.inf
   MdeModulePkg/Universal/Console/ConSplitterDxe/ConSplitterDxe.inf
 
-# No graphic console supported yet.
-#  MdeModulePkg/Universal/Console/GraphicsConsoleDxe/GraphicsConsoleDxe.inf {
-#    <LibraryClasses>
-#      PcdLib|MdePkg/Library/DxePcdLib/DxePcdLib.inf
-#  }
+# Graphic console
+  MdeModulePkg/Universal/Console/GraphicsConsoleDxe/GraphicsConsoleDxe.inf
+
   MdeModulePkg/Universal/Console/TerminalDxe/TerminalDxe.inf
   MdeModulePkg/Universal/DevicePathDxe/DevicePathDxe.inf {
     <LibraryClasses>
@@ -609,6 +608,13 @@
   }
   OvmfPkg/VirtioPciDeviceDxe/VirtioPciDeviceDxe.inf
   OvmfPkg/Virtio10Dxe/Virtio10.inf
+
+  #
+  # Video support
+  #
+  OvmfPkg/QemuRamfbDxe/QemuRamfbDxe.inf
+  OvmfPkg/VirtioGpuDxe/VirtioGpu.inf
+  OvmfPkg/PlatformDxe/Platform.inf
 
   #
   # Platform Driver
@@ -764,4 +770,9 @@ NetworkPkg/TlsAuthConfigDxe/TlsAuthConfigDxe.inf {
 [PcdsFeatureFlag.common]
   gUefiOvmfPkgTokenSpaceGuid.PcdQemuBootOrderPciTranslation|TRUE
   gUefiOvmfPkgTokenSpaceGuid.PcdQemuBootOrderMmioTranslation|TRUE
+
+  ## If TRUE, Graphics Output Protocol will be installed on virtual handle created by ConsplitterDxe.
+  #  It could be set FALSE to save size.
+  gEfiMdeModulePkgTokenSpaceGuid.PcdConOutGopSupport|TRUE
+  gEfiMdeModulePkgTokenSpaceGuid.PcdConOutUgaSupport|FALSE
 
