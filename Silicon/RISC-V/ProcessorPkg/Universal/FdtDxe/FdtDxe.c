@@ -18,6 +18,7 @@
 #include <Library/PcdLib.h>
 #include <libfdt.h>
 #include <Library/QemuFwCfgLib.h>
+#include <Library/RiscVFirmwareContextLib.h>
 
 /**
   Fix up the device tree with booting hartid for the kernel
@@ -78,6 +79,7 @@ InstallFdtFromHob (
   EFI_HOB_GUID_TYPE  *GuidHob;
   VOID               *DataInHob;
   UINTN              DataSize;
+  EFI_RISCV_OPENSBI_FIRMWARE_CONTEXT *FirmwareContext;
 
   GuidHob = GetFirstGuidHob (&gFdtHobGuid);
   if (GuidHob == NULL) {
@@ -88,11 +90,18 @@ InstallFdtFromHob (
       ));
     return EFI_NOT_FOUND;
   }
+  GetFirmwareContextPointer (&FirmwareContext);
+  ASSERT (FirmwareContext != NULL);
+  if (FirmwareContext == NULL) {
+    DEBUG ((DEBUG_ERROR, "Failed to get the pointer of EFI_RISCV_OPENSBI_FIRMWARE_CONTEXT\n"));
+    return EFI_NOT_FOUND;
+  }
 
+  DEBUG ((DEBUG_INFO, " %a:  BootHartId = 0x%x.\n", __FUNCTION__, FirmwareContext->BootHartId));
   DataInHob = (VOID *)*((UINTN *)GET_GUID_HOB_DATA (GuidHob));
   DataSize  = GET_GUID_HOB_DATA_SIZE (GuidHob);
 
-  Status = FixDtb (DataInHob, PcdGet32 (PcdBootHartId));
+  Status = FixDtb (DataInHob, FirmwareContext->BootHartId);
   if (EFI_ERROR (Status)) {
     return Status;
   }
